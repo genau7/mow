@@ -1,4 +1,4 @@
-predict.aode <- function (model, newdata, threshold = 0.001, ...) 
+predict.aode <- function (model, newdata) 
 {
   if (missing(newdata)) 
     newdata <- model$x

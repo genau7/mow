@@ -22,7 +22,7 @@ aode.formula <- function (formula, data, ..., subset, na.action = na.pass)
   else stop("AODE formula interface handles data frames only")
 }
 
-aode.default <- function (x, grouping, prior = NULL, fL = 0, ...) 
+aode.default <- function (x, grouping, prior = NULL, fL = 1, ...) 
 {
   x <- data.frame(x)
   selector<-c()
@@ -32,7 +32,6 @@ aode.default <- function (x, grouping, prior = NULL, fL = 0, ...)
     apriori <- table(grouping) / length(grouping)
   else 
     apriori <- as.table(prior / sum(prior))
-  call <- match.call()
   Yname <- "grouping"
   
   LaplaceEst <- function(x, f = 0)  # x is a table: cols= levels of an attribue, rows= num of labels for each level
@@ -61,5 +60,5 @@ aode.default <- function (x, grouping, prior = NULL, fL = 0, ...)
   tables2 <- lapply(seq_along(x), estDouble)
   names(tables2)<-names(x)
   for (attrName in names(x)){ names(tables2[[attrName]])<-levels(x[[attrName]])  }
-  structure(list(apriori = apriori, conditionals = tables, doubleConditionals = tables2, levels = levels(grouping), call = call, x = x, varnames = colnames(x)), class = "aode")
+  structure(list(apriori = apriori, conditionals = tables, doubleConditionals = tables2, levels = levels(grouping), x = x, varnames = colnames(x)), class = "aode")
 }
